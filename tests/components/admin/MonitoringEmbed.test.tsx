@@ -35,10 +35,12 @@ describe("MonitoringEmbed", () => {
   test("renders MonitoringDashboard inside a full-height container", () => {
     const { queryByTestId, container } = render(<MonitoringEmbed />);
     expect(queryByTestId("monitoring-dashboard")).not.toBeNull();
-    // Wrapper div has h-full class
+    // Wrapper fills the page's height and frames the dashboard as a bordered panel
     const wrapper = container.firstElementChild as HTMLElement;
     expect(wrapper).not.toBeNull();
-    expect(wrapper.className).toContain("h-full");
+    expect(wrapper.className.split(" ")).toEqual(
+      expect.arrayContaining(["h-full", "overflow-hidden", "rounded-xl", "border", "border-hairline"]),
+    );
   });
 
   test("passes isEmbedded=true to MonitoringDashboard", () => {
