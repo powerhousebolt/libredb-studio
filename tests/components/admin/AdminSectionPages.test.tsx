@@ -48,6 +48,17 @@ describe("Admin section pages", () => {
     expect(getByTestId("monitoring-embed")).not.toBeNull();
   });
 
+  test("monitoring page uses the same centered content column as the other sections", () => {
+    const { getByTestId } = render(<AdminMonitoringPage />);
+    const monitoring = getByTestId("admin-content-monitoring").className;
+    cleanup();
+    const operations = render(<AdminOperationsPage />).getByTestId("admin-content-operations").className;
+    for (const cls of ["mx-auto", "max-w-7xl", "px-4", "sm:px-6", "py-6"]) {
+      expect(operations.split(" ")).toContain(cls);
+      expect(monitoring.split(" ")).toContain(cls);
+    }
+  });
+
   test("security page renders SecurityTab", () => {
     const { getByTestId } = render(<AdminSecurityPage />);
     expect(getByTestId("admin-content-security")).not.toBeNull();

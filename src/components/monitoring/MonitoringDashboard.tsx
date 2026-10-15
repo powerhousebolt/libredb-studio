@@ -139,9 +139,11 @@ export function MonitoringDashboard({ isEmbedded = false }: MonitoringDashboardP
   return (
     <div className="flex flex-col h-full bg-background">
       {/* Header - Mobile Responsive */}
+      {/* The header and tab bands span the page; their contents and the tab content sit in the same
+          centered max-w-7xl column the admin dashboard uses (a no-op inside the admin's own column). */}
       <header className="border-b bg-card">
         {/* Top row: Back button, title, refresh controls */}
-        <div className="flex items-center justify-between px-3 py-2 sm:px-4 sm:py-3">
+        <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-3 py-2 sm:px-4 sm:py-3">
           <div className="flex items-center gap-2 sm:gap-4">
             {!isEmbedded && (
               <Button
@@ -216,7 +218,7 @@ export function MonitoringDashboard({ isEmbedded = false }: MonitoringDashboardP
         </div>
 
         {/* Bottom row: Connection selector (mobile-friendly), and the database on a server-level one */}
-        <div className="flex flex-col gap-2 px-3 pb-2 sm:flex-row sm:items-center sm:px-4 sm:pb-3">
+        <div className="mx-auto flex w-full max-w-7xl flex-col gap-2 px-3 pb-2 sm:flex-row sm:items-center sm:px-4 sm:pb-3">
           <Select value={selectedConnection?.id || ""} onValueChange={handleConnectionChange}>
             <SelectTrigger className="w-full sm:w-[280px]">
               <SelectValue placeholder="Select connection">
@@ -279,105 +281,109 @@ export function MonitoringDashboard({ isEmbedded = false }: MonitoringDashboardP
           <Tabs value={activeTab} onValueChange={setActiveTab} className="flex flex-col h-full">
             {/* Tab Bar - Icon only on mobile, Icon + Text on desktop */}
             <div className="border-b bg-muted/30">
-              <TabsList className="h-12 w-full justify-between sm:justify-start rounded-none bg-transparent p-0">
-                <TabsTrigger
-                  value="overview"
-                  className="flex-1 sm:flex-initial gap-2 px-2 sm:px-4 rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent text-xs sm:text-xs"
-                  title="Overview"
-                >
-                  <LayoutDashboard strokeWidth={1.5} className="h-4 w-4 sm:h-4 sm:w-4" />
-                  <span className="hidden sm:inline">Overview</span>
-                </TabsTrigger>
-                <TabsTrigger
-                  value="performance"
-                  className="flex-1 sm:flex-initial gap-2 px-2 sm:px-4 rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent text-xs sm:text-xs"
-                  title="Performance"
-                >
-                  <Activity strokeWidth={1.5} className="h-4 w-4 sm:h-4 sm:w-4" />
-                  <span className="hidden sm:inline">Performance</span>
-                </TabsTrigger>
-                <TabsTrigger
-                  value="queries"
-                  className="flex-1 sm:flex-initial gap-2 px-2 sm:px-4 rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent text-xs sm:text-xs"
-                  title="Queries"
-                >
-                  <Clock strokeWidth={1.5} className="h-4 w-4 sm:h-4 sm:w-4" />
-                  <span className="hidden sm:inline">Queries</span>
-                </TabsTrigger>
-                <TabsTrigger
-                  value="sessions"
-                  className="flex-1 sm:flex-initial gap-2 px-2 sm:px-4 rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent text-xs sm:text-xs"
-                  title="Sessions"
-                >
-                  <Users strokeWidth={1.5} className="h-4 w-4 sm:h-4 sm:w-4" />
-                  <span className="hidden sm:inline">Sessions</span>
-                </TabsTrigger>
-                <TabsTrigger
-                  value="tables"
-                  className="flex-1 sm:flex-initial gap-2 px-2 sm:px-4 rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent text-xs sm:text-xs"
-                  title="Tables"
-                >
-                  <Table2 strokeWidth={1.5} className="h-4 w-4 sm:h-4 sm:w-4" />
-                  <span className="hidden sm:inline">Tables</span>
-                </TabsTrigger>
-                <TabsTrigger
-                  value="storage"
-                  className="flex-1 sm:flex-initial gap-2 px-2 sm:px-4 rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent text-xs sm:text-xs"
-                  title="Storage"
-                >
-                  <HardDrive strokeWidth={1.5} className="h-4 w-4 sm:h-4 sm:w-4" />
-                  <span className="hidden sm:inline">Storage</span>
-                </TabsTrigger>
-                <TabsTrigger
-                  value="pool"
-                  className="flex-1 sm:flex-initial gap-2 px-2 sm:px-4 rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent text-xs sm:text-xs"
-                  title="Pool"
-                >
-                  <Database strokeWidth={1.5} className="h-4 w-4 sm:h-4 sm:w-4" />
-                  <span className="hidden sm:inline">Pool</span>
-                </TabsTrigger>
-              </TabsList>
+              <div className="mx-auto w-full max-w-7xl">
+                <TabsList className="h-12 w-full justify-between sm:justify-start rounded-none bg-transparent p-0">
+                  <TabsTrigger
+                    value="overview"
+                    className="flex-1 sm:flex-initial gap-2 px-2 sm:px-4 rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent text-xs sm:text-xs"
+                    title="Overview"
+                  >
+                    <LayoutDashboard strokeWidth={1.5} className="h-4 w-4 sm:h-4 sm:w-4" />
+                    <span className="hidden sm:inline">Overview</span>
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="performance"
+                    className="flex-1 sm:flex-initial gap-2 px-2 sm:px-4 rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent text-xs sm:text-xs"
+                    title="Performance"
+                  >
+                    <Activity strokeWidth={1.5} className="h-4 w-4 sm:h-4 sm:w-4" />
+                    <span className="hidden sm:inline">Performance</span>
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="queries"
+                    className="flex-1 sm:flex-initial gap-2 px-2 sm:px-4 rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent text-xs sm:text-xs"
+                    title="Queries"
+                  >
+                    <Clock strokeWidth={1.5} className="h-4 w-4 sm:h-4 sm:w-4" />
+                    <span className="hidden sm:inline">Queries</span>
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="sessions"
+                    className="flex-1 sm:flex-initial gap-2 px-2 sm:px-4 rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent text-xs sm:text-xs"
+                    title="Sessions"
+                  >
+                    <Users strokeWidth={1.5} className="h-4 w-4 sm:h-4 sm:w-4" />
+                    <span className="hidden sm:inline">Sessions</span>
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="tables"
+                    className="flex-1 sm:flex-initial gap-2 px-2 sm:px-4 rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent text-xs sm:text-xs"
+                    title="Tables"
+                  >
+                    <Table2 strokeWidth={1.5} className="h-4 w-4 sm:h-4 sm:w-4" />
+                    <span className="hidden sm:inline">Tables</span>
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="storage"
+                    className="flex-1 sm:flex-initial gap-2 px-2 sm:px-4 rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent text-xs sm:text-xs"
+                    title="Storage"
+                  >
+                    <HardDrive strokeWidth={1.5} className="h-4 w-4 sm:h-4 sm:w-4" />
+                    <span className="hidden sm:inline">Storage</span>
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="pool"
+                    className="flex-1 sm:flex-initial gap-2 px-2 sm:px-4 rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent text-xs sm:text-xs"
+                    title="Pool"
+                  >
+                    <Database strokeWidth={1.5} className="h-4 w-4 sm:h-4 sm:w-4" />
+                    <span className="hidden sm:inline">Pool</span>
+                  </TabsTrigger>
+                </TabsList>
+              </div>
             </div>
 
             <div className="flex-1 overflow-auto">
-              <TabsContent value="overview" className="h-full m-0 p-0">
-                <OverviewTab data={data} loading={loading} history={history} />
-              </TabsContent>
-              <TabsContent value="performance" className="h-full m-0 p-0">
-                <PerformanceTab data={data} loading={loading} history={history} />
-              </TabsContent>
-              <TabsContent value="queries" className="h-full m-0 p-0">
-                <QueriesTab data={data} loading={loading} labels={metadata?.labels} />
-              </TabsContent>
-              <TabsContent value="sessions" className="h-full m-0 p-0">
-                <SessionsTab
-                  data={data}
-                  loading={loading}
-                  onKillSession={killSession}
-                  labels={metadata?.labels}
-                  isAdmin={isAdmin}
-                  capabilities={capabilities}
-                />
-              </TabsContent>
-              <TabsContent value="tables" className="h-full m-0 p-0">
-                <TablesTab
-                  data={data}
-                  loading={loading}
-                  onRunMaintenance={runMaintenance}
-                  onPreviewMaintenance={previewMaintenance}
-                  capabilities={capabilities}
-                  isAdmin={isAdmin}
-                  labels={metadata?.labels}
-                  // The provider refuses every maintenance operation on a read-only connection (#1418).
-                  readOnly={selectedConnection?.readOnly === true}
-                />
-              </TabsContent>
-              <TabsContent value="storage" className="h-full m-0 p-0">
-                <StorageTab data={data} loading={loading} />
-              </TabsContent>
-              <TabsContent value="pool" className="h-full m-0 p-0">
-                <PoolTab connection={selectedConnection} catalog={catalog} />
-              </TabsContent>
+              <div data-testid="monitoring-content-column" className="mx-auto h-full w-full max-w-7xl">
+                <TabsContent value="overview" className="h-full m-0 p-0">
+                  <OverviewTab data={data} loading={loading} history={history} />
+                </TabsContent>
+                <TabsContent value="performance" className="h-full m-0 p-0">
+                  <PerformanceTab data={data} loading={loading} history={history} />
+                </TabsContent>
+                <TabsContent value="queries" className="h-full m-0 p-0">
+                  <QueriesTab data={data} loading={loading} labels={metadata?.labels} />
+                </TabsContent>
+                <TabsContent value="sessions" className="h-full m-0 p-0">
+                  <SessionsTab
+                    data={data}
+                    loading={loading}
+                    onKillSession={killSession}
+                    labels={metadata?.labels}
+                    isAdmin={isAdmin}
+                    capabilities={capabilities}
+                  />
+                </TabsContent>
+                <TabsContent value="tables" className="h-full m-0 p-0">
+                  <TablesTab
+                    data={data}
+                    loading={loading}
+                    onRunMaintenance={runMaintenance}
+                    onPreviewMaintenance={previewMaintenance}
+                    capabilities={capabilities}
+                    isAdmin={isAdmin}
+                    labels={metadata?.labels}
+                    // The provider refuses every maintenance operation on a read-only connection (#1418).
+                    readOnly={selectedConnection?.readOnly === true}
+                  />
+                </TabsContent>
+                <TabsContent value="storage" className="h-full m-0 p-0">
+                  <StorageTab data={data} loading={loading} />
+                </TabsContent>
+                <TabsContent value="pool" className="h-full m-0 p-0">
+                  <PoolTab connection={selectedConnection} catalog={catalog} />
+                </TabsContent>
+              </div>
             </div>
           </Tabs>
         </div>

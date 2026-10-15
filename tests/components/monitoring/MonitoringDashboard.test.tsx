@@ -422,6 +422,23 @@ describe("MonitoringDashboard", () => {
     expect(queryByText("Back")).toBeNull();
   });
 
+  test("centers the header rows, tab bar and tab content in a max-w-7xl column", async () => {
+    let renderResult: ReturnType<typeof render>;
+    await act(async () => {
+      renderResult = render(<MonitoringDashboard />);
+    });
+    const { container, getByTestId, getByText } = renderResult!;
+    const column = ["mx-auto", "w-full", "max-w-7xl"];
+    const header = container.querySelector("header") as HTMLElement;
+    for (const row of Array.from(header.children)) {
+      expect((row as HTMLElement).className.split(" ")).toEqual(expect.arrayContaining(column));
+    }
+    expect(getByTestId("monitoring-content-column").className.split(" ")).toEqual(expect.arrayContaining(column));
+    // The tab bar band stays full width; its centered column holds the tab list.
+    const tabColumn = getByText("Performance").closest('[role="tablist"]')?.parentElement as HTMLElement;
+    expect(tabColumn.className.split(" ")).toEqual(expect.arrayContaining(column));
+  });
+
   test("changing connection via selector selects the new connection", async () => {
     let renderResult: ReturnType<typeof render>;
     await act(async () => {
